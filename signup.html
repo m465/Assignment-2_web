@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="signup.css" >
+        <title> SignUp Page</title>
+        <style>
+            body {
+                background-color: rgb(59, 57, 57); /* Change this color to your desired background color */
+            }
+            .error {
+                color: red;
+            }
+        </style>
+</head>
+<body>
+  <div class="form-box">
+    <div class="form-value">
+        <form id="signup-form" action="#" method="post">
+            <h2>Sign-Up</h2>
+            <div class="inputbox">
+              <input type="text" id="first-name" name="first-name" placeholder="First Name"  required>
+              <span id="first-name-error" class="error"></span>
+            </div>
+            <div class="inputbox">
+              <input type="text" id="last-name" name="last-name" placeholder="Last Name" required>
+              <span id="last-name-error" class="error"></span>
+            </div>
+            <div class="inputbox">
+              <input type="email" id="email" name="email" placeholder="Email" required>
+              <span id="email-error" class="error"></span>
+            </div>
+            <div class="inputbox">
+              <input type="password" id="password" name="password" placeholder="Password" required>
+              <span id="password-error" class="error"></span>
+            </div>
+            <div class="inputbox">
+              <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm Password" required>
+              <span id="confirm-password-error" class="error"></span>
+            </div>
+            <div class="DOB">
+              <label for="dob">Date of Birth:</label>
+              <input type="date" id="dob" name="dob" required>
+              <span id="dob-error" class="error"></span>
+            </div><br>
+            <div class="d_list">
+              <label for="gender">Gender:</label>
+              <select id="gender" name="gender" required>
+                <option value="">Select gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+              </select>
+              <span id="gender-error" class="error"></span>
+            </div>
+            <div class="btn">
+              <button type="submit">Sign Up</button>
+            </div>
+          </form>
+    </div>
+  </div>
+  <script>
+    const form = document.getElementById('signup-form');
+    const firstName = document.getElementById('first-name');
+    const lastName = document.getElementById('last-name');
+    const email = document.getElementById('email');
+    const password = document.getElementById('password');
+    const confirmPassword = document.getElementById('confirm-password');
+    const dob = document.getElementById('dob');
+    const gender = document.getElementById('gender');
+    const terms = document.getElementById('terms');
+
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+      validateForm();
+    });
+
+    function validateForm() {
+      clearErrors();
+      let isValid = true;
+
+      if (!firstName.value) {
+        setError(firstName, 'First name is required');
+        isValid = false;
+      }
+
+      if (!lastName.value) {
+        setError(lastName, 'Last name is required');
+        isValid = false;
+      }
+
+      if (!email.value) {
+        setError(email, 'Email is required');
+        isValid = false;
+      } else if (!isValidEmail(email.value)) {
+        setError(email, 'Invalid email format');
+        isValid = false;
+      }
+
+      if (!password.value) {
+        setError(password, 'Password is required');
+        isValid = false;
+      } else if (password.value.length < 8) {
+        setError(password, 'Password must be at least 8 characters long');
+        isValid = false;
+      }
+
+      if (!confirmPassword.value) {
+        setError(confirmPassword, 'Confirm password is required');
+        isValid = false;
+      } else if (confirmPassword.value !== password.value) {
+        setError(confirmPassword, 'Passwords do not match');
+        isValid = false;
+      }
+
+      if (!dob.value) {
+        setError(dob, 'Date of birth is required');
+        isValid = false;
+      }
+
+      if (!gender.value) {
+        setError(gender, 'Gender is required');
+        isValid = false;
+      }
+
+      if (!terms.checked) {
+        setError(terms, 'You must agree to the terms and conditions');
+        isValid = false;
+      }
+
+      if (isValid) {
+        alert('Form submitted successfully!');
+        form.reset();
+      }
+    }
+
+    function setError(input, message) {
+      const errorSpan = input.nextElementSibling;
+      errorSpan.innerText = message;
+    }
+
+    function clearErrors() {
+      const errors = document.querySelectorAll('.error');
+      errors.forEach(error => error.innerText = '');
+    }
+
+    function isValidEmail(email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+    }
+  </script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script> 
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script> 
+</body>
+</html>
